@@ -1,6 +1,12 @@
-from src.database import async_session_maker
+from database import async_session_maker
+from sqlalchemy import select, insert
+from users.models import User
 
 
 class UserDAO:
-    pass
+    
+    model = User
+
+    
+
 
