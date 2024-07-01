@@ -14,7 +14,7 @@ async def get_users():
 @router.post("/add_post")   
 async def add_post(post: SPost):                                
     await PostDAO.add_post(user_id=post.user_id, text=post.text)
-    return "Пост запостщен)"
+    return "Пост запощен)"
 
 @router.delete("/delete_post")
 async def delete_post(post_id: int):                    
