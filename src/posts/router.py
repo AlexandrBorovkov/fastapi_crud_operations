@@ -1,7 +1,8 @@
-from fastapi import APIRouter
-from posts.schemas import SPost, Update_post
+from fastapi import APIRouter, Depends
+from posts.schemas import SPost, SPost_update
 from posts.dao import PostDAO
-
+from users.dependencies import get_current_user
+from users.models import User
 
 
 router = APIRouter(prefix="/posts", tags=["Посты"])
@@ -12,16 +13,16 @@ async def get_users():
     return result
 
 @router.post("/add_post")   
-async def add_post(post: SPost):                                
-    await PostDAO.add_post(user_id=post.user_id, text=post.text)
+async def add_post(post: SPost, user: User = Depends(get_current_user)):                                
+    await PostDAO.add_post(user_id=user.id, text=post.text)
     return "Пост запощен)"
 
-@router.delete("/delete_post")
-async def delete_post(post_id: int):                    
+@router.delete("/delete_post")                                                  # Исправить
+async def delete_post(post_id: int,user: User = Depends(get_current_user)):                    
     await PostDAO.delete_post(post_id)
     return "Пост удален"
 
-@router.patch("/update_post")                        
-async def update_post(post: Update_post):
+@router.patch("/update_post")                                                    # Исправить
+async def update_post(post: SPost_update, user: User = Depends(get_current_user)):
     await PostDAO.update_post(post.post_id, post.new_text)      
     return "Пост изменён"
