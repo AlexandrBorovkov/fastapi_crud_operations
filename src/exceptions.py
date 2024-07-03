@@ -37,3 +37,7 @@ class IncorrectTokenFormatException(UserException):
 
 class UserIsNotPresentException(UserException):
     status_code=status.HTTP_401_UNAUTHORIZED
+
+class UserDoesNotHaveRights(UserException):
+    status_code=status.HTTP_403_FORBIDDEN
+    detail="Нет прав на выполнение действий"
